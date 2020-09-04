@@ -1,9 +1,28 @@
-class CreateTree:
-    def create_tree(self, plc, lists):
-        self.tree = ttk.Treeview(plc, height=13, column=(lists), show='headings')
-        n = 0
-        while n is not len(lists):
-            self.tree.heading("#" + str(n + 1), text=lists[n])
-            self.tree.column("" + lists[n], width=100)
-            n = n + 1
-        return self.tree
+class SearchingSorting:
+
+    def swap(self, A, x, y):
+        temp = A[x]
+        A[x] = A[y]
+        A[y] = temp
+
+    def linear_search(self, item, my_list):
+        self.found = False
+        self.position = 0
+        while self.position < len(my_list) and not self.found:
+            if my_list[self.position] == item:
+                self.found = True
+            self.position = self.position + 1
+        print('found??' + str(self.found))
+        return self.found
+
+    def selection_sort(self, alist):
+        for i in range(len(alist)):
+            self.least = i
+            for k in range(i + 1, len(alist)):
+                if int(alist[k]) < int(alist[self.least]):
+                    self.least = k
+
+            SearchingSorting.swap(self, alist, self.least, i)
+            
+            
+            
