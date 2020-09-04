@@ -1,15 +1,34 @@
-# ==============================METHODS========================================
 
+    ################
 
-def Database():
-    global conn, cursor
-    conn = sqlite3.connect("db/credentials.db")
-    cursor = conn.cursor()
-    cursor.execute(
-        "CREATE TABLE IF NOT EXISTS `login` (mem_id INTEGER NOT NULL PRIMARY KEY  AUTOINCREMENT, username TEXT, "
-        "password TEXT)")
-    cursor.execute("SELECT * FROM `login` WHERE `username` = 'admin' AND `password` = 'admin'")
-    if cursor.fetchone() is None:
-        cursor.execute("INSERT INTO `login` (username, password) VALUES('x', 'x')")
-        conn.commit()
+    def add_book(self):
+        a = self.aid.get()
+        b = self.aname.get()
+        c = self.aauthor.get()
+        d = self.agenre.get()
+        e = self.acopies.get()
+        try:
+            e = int(e)
+        except ValueError:
+            messagebox.showerror("Error", "No. of copies expects integer value")
+            return
+        f = self.aloc.get()
+        conn = sqlite3.connect('db/softwarica.db')
+        try:
+            if (a and b and c and d and f) == "":
+                messagebox.showerror("Error", "Fields cannot be empty")
+            elif "-" in str(e):
+                messagebox.showerror("Error", "No. of copies cannot be negative")
+            else:
+                conn.execute("insert into book_info \
+                values (?,?,?,?,?,?)",
+                             (a.capitalize(), b.capitalize(), c.capitalize(), d.capitalize(), e, f.capitalize(),))
+                conn.commit()
+                messagebox.showinfo("Success", "Book added successfully")
+        except sqlite3.IntegrityError:
+            messagebox.showerror("Error", "Book is already present.")
 
+        conn.close()
+
+        
+        
