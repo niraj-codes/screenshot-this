@@ -188,7 +188,7 @@ def Database():
         "password TEXT)")
     cursor.execute("SELECT * FROM `login` WHERE `username` = 'admin' AND `password` = 'admin'")
     if cursor.fetchone() is None:
-        cursor.execute("INSERT INTO `login` (username, password) VALUES('x', 'x')")
+        cursor.execute("INSERT INTO `login` (username, password) VALUES('admin', 'password')")
         conn.commit()
 
 
